@@ -16,7 +16,24 @@ const Home: NextPage = (): React.ReactElement => {
       <Head>
         <title>EARMARKED By Jordan Tricket</title>
       </Head>
-      <main className={robotoCondensed.className}></main>
+      <main className={robotoCondensed.className}>
+        <nav className="container flex flex-row px-1 py-2 sm:px-4 lg:px-8">
+          <div className="logo-container">
+            <div className="logo-text">
+              <div className="logo-top-level-container flex items-center">
+                <h5 className="pr-1 text-4xl font-black">EARMARKED</h5>
+                <div className="logo-icon">
+                  <div className="logo-icon-corner"></div>
+                </div>
+              </div>
+              <p className="text-2xl font-semibold leading-3 tracking-wide text-text-secondary">
+                By Jordan Trickett
+              </p>
+            </div>
+          </div>
+          <div className="nav-link"></div>
+        </nav>
+      </main>
     </div>
   )
 }

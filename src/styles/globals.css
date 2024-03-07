@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply text-text;
+  }
+}
+
 body {
   -webkit-font-smoothing: antialiased;
 }
@@ -27,4 +33,34 @@ h6 {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.logo-top-level-container {
+  position: relative;
+  width: fit-content;
+}
+
+.logo-icon {
+  position: relative;
+  background-color: #09e747;
+  height: 30px;
+  width: 30px;
+  border-radius: 3px;
+}
+
+.logo-icon-corner:before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  border-style: solid;
+  border-color: #fff #fff #11ae3e #11ae3e;
+  transition: 0.5s;
+  border-radius: 0 0 0 5px;
+  border-width: 6px;
+  box-shadow: -5px 5px 10px -6px #000;
+}
+
+.logo-container:hover .logo-icon-corner:before {
+  border-width: 9px;
 }
