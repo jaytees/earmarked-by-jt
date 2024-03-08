@@ -20,7 +20,7 @@ const Pagination: React.FC = ({pageNumber, setPageNumber, numberOfPages}: {pageN
     <nav aria-label="page navigation" className='w-min'>
       <ul className="inline-flex -space-x-px text-sm">
         <li key="previous-button">
-          <button onClick={navButtonOnClickHandler} disabled={pageNumber === 0} aria-label='previous' className="flex font items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-green hover:font-semibold">Previous</button>
+          <button onClick={navButtonOnClickHandler} disabled={pageNumber === 0} aria-label='previous' className="flex font items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-green hover:font-semibold disabled:bg-gray-200">Previous</button>
         </li>
         {
           Array.from({length: numberOfPages}).map((_, i) => {
@@ -33,7 +33,7 @@ const Pagination: React.FC = ({pageNumber, setPageNumber, numberOfPages}: {pageN
           })
         }
         <li key='next-button'>
-          <button onClick={navButtonOnClickHandler} disabled={pageNumber === numberOfPages} aria-label='next' className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-green hover:font-semibold">Next</button>
+          <button onClick={navButtonOnClickHandler} disabled={pageNumber === numberOfPages - 1} aria-label='next' className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-green hover:font-semibold disabled:bg-gray-200">Next</button>
         </li>
       </ul>
     </nav>
