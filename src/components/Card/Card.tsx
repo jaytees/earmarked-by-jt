@@ -1,9 +1,10 @@
 import Link from "next/link"
 import { BookmarkType } from "@/types/bookmarks"
 import styles from './Card.module.css'
-import DeleteIcon from "./DeleteIcon"
+import DeleteButton from "./DeleteButton"
 
 const Card: React.FC<{bookmark: BookmarkType, handleDelete: React.MouseEventHandler, handleChange: React.ChangeEventHandler, handleSubmit: React.FormEventHandler}> = ({bookmark, handleDelete, handleChange, handleSubmit}): React.ReactElement => {
+
   return (
     <article
       className={`${styles.card} relative flex flex-col p-5 w-full bg-stone-100 rounded-xl sm:py-6 sm:rounded-md`}
@@ -29,9 +30,16 @@ const Card: React.FC<{bookmark: BookmarkType, handleDelete: React.MouseEventHand
             className="pl-2 flex-1 text-xl font-bold md:text-4xl truncate bg-stone-100 decoration-2 decoration-text-secondary hover:underline hover:underline-offset-2 focus:underline"
           />
         </div>
-        <p className="my-2 text-base font-medium text-text-secondary line-clamp-2">{bookmark.description}</p>
+        <textarea
+        id="description"
+        name="description"
+        value={bookmark.description}
+        onChange={handleChange}
+        onBlur={handleSubmit}
+        className="my-3 text-xl font-medium text-text-secondary line-clamp-2 bg-stone-100 resize-none hover:bg-stone-50 hover:resize-y"
+        />
         <div className="absolute bottom-2 right-3">
-          <DeleteIcon onClickHandler={handleDelete}/>
+          <DeleteButton onClickHandler={handleDelete}/>
         </div>
     </article>
   )

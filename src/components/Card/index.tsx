@@ -44,7 +44,7 @@ const CardContainer: React.FC<{bookmark: BookmarkType, bookmarkIndex: number, se
 
 
   const handleDelete = () => {
-    debugger
+
   }
 
   return (

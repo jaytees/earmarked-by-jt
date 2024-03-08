@@ -1,4 +1,4 @@
-const DeleteIcon: React.FC<{onClickHandler: () => void}> = ({onClickHandler}): React.ReactElement => {
+const DeleteButton: React.FC<{onClickHandler:  React.MouseEventHandler}> = ({onClickHandler}): React.ReactElement => {
   return (
     <button onClick={onClickHandler}>
       <svg className="cursor-pointer w-5 h-5 text-text-secondary hover:text-text focus:text-text" fill="currentColor" version="1.1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" 
@@ -14,4 +14,4 @@ const DeleteIcon: React.FC<{onClickHandler: () => void}> = ({onClickHandler}): R
     </button>
   )
 }
-export default DeleteIcon
+export default DeleteButton
