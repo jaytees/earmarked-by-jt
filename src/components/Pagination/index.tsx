@@ -1,5 +1,7 @@
-const Pagination: React.FC = ({pageNumber, setPageNumber, numberOfPages}: {pageNumber: number, setPageNumber: React.SetStateAction, numberOfPages: number}): React.ReactElement => {
-  const navButtonOnClickHandler = (e) => {
+import type { Dispatch, MouseEventHandler, SetStateAction } from 'react'
+
+const Pagination: React.FC = ({pageNumber, setPageNumber, numberOfPages}: {pageNumber: number, setPageNumber: Dispatch<SetStateAction<number>>, numberOfPages: number}): React.ReactElement => {
+  const navButtonOnClickHandler = (e: React.MouseEvent<HTMLButtonElement>): void => {
     debugger
     if (e.target.ariaLabel === 'next' && pageNumber < (numberOfPages - 1)) {
       return setPageNumber(pageNumber + 1)
@@ -9,7 +11,7 @@ const Pagination: React.FC = ({pageNumber, setPageNumber, numberOfPages}: {pageN
     }
   }
 
-  const numberClickHandler = (e) => {
+  const numberClickHandler = (e: React.MouseEvent<HTMLButtonElement>): void => {
     setPageNumber(parseInt(e.target.innerHTML) - 1)
   }
   
