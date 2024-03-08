@@ -1,0 +1,34 @@
+.logo__title {
+  position: relative;
+  width: fit-content;
+}
+
+.logo__icon {
+  position: relative;
+  background-color: #09e747;
+  height: 30px;
+  width: 30px;
+  border-radius: 3px;
+}
+
+.logo__icon__corner:before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  border-style: solid;
+  border-color: #fff #fff #11ae3e #11ae3e;
+  transition: 0.5s;
+  border-radius: 0 0 0 5px;
+  border-width: 6px;
+  box-shadow: -5px 5px 10px -6px #000;
+  transition: 0.3s all ease-out;
+}
+
+.logo:hover .logo__icon__corner:before {
+  border-width: 9px;
+}
+
+.logo__subtitle {
+  letter-spacing: 0.11em;
+}
