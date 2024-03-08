@@ -1,8 +1,13 @@
 import { NextPage } from "next"
 import { useState, useEffect } from "react"
+import type { Dispatch, SetStateAction } from 'react'
+import { useRouter } from 'next/router'
+import { v4 as uuidv4 } from 'uuid'
 import { useToggle } from "@/hooks/useToggle"
 import AddLink from "./AddLink"
 import validateForm from "@/utils/formValidators"
+import { BookmarkType } from "@/types/bookmarks"
+import bookmarkHelpers from "@/utils/bookmarkHelpers"
 
 export interface BookmarkFormDataInt {
   url: string
@@ -15,7 +20,10 @@ export interface FormErrorsInt {
   title: string
 }
 
-const AddLinkContainer: NextPage = (): React.ReactElement => {
+const AddLinkContainer: NextPage<{ setBookmarks: Dispatch<SetStateAction<BookmarkType[]>> }> = ({
+  setBookmarks,
+}): React.ReactElement => {
+  const router = useRouter()
   const [formData, setFormData] = useState<BookmarkFormDataInt>({
     url: '',
     title: '',
@@ -67,10 +75,22 @@ const AddLinkContainer: NextPage = (): React.ReactElement => {
       setSubmitting(false)
       return
     }
-    debugger
     setSubmitting(false)
-    // save to local storage
-    // redirect
+    const finalBookmarkdata = {
+      ...formData,
+      id: uuidv4(),
+      url: res.url,
+      icon: res.icon,
+    }
+    const updatedBookmarksArray = bookmarkHelpers.addBookmark(finalBookmarkdata)
+    setBookmarks(updatedBookmarksArray)
+    setSubmitting(false)
+    router.push({
+      pathname: '/new-link',
+      query: {
+        id: finalBookmarkdata.id,
+      },
+    })
   }
   
   return (

@@ -3,15 +3,15 @@ import PlusIcon from '../PlusIcon'
 import { useState } from 'react'
 
 const variantButtonClasses = {
-  default: 'text-text hover:text-gray-600',
+  primary: 'text-text hover:text-gray-600',
   outline: 'text-text bg-white rounded-lg border-2 border-gray-200 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100'
 }
 
 interface ButtonPropsInt {
-  variant: 'default' | 'outline'
+  variant: 'primary' | 'outline'
 }
 
-const AddLinkButton: React.FC<ButtonPropsInt> = ({variant = 'default'}) => {
+const AddLinkButton: React.FC<ButtonPropsInt> = ({variant = 'primary'}) => {
   const router = useRouter()
   const [hoverActive, setHoverActive] = useState(false)
   const onClickNavigate = (): void => {

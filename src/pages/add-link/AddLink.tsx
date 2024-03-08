@@ -17,7 +17,7 @@ const AddLink: React.FC<{
 }> = ({formData, formErrors, handleChange, handleSubmit, hasValidationErrors,
   submitting,}): React.ReactElement => {
   const isDisabled = !formData.title || !formData.url || hasValidationErrors || submitting
-  
+
   return (
     <>
       <Head>
@@ -84,7 +84,7 @@ const AddLink: React.FC<{
           </div>
           <button
             type="submit"
-            className="my-2 me-2 w-4/12  cursor-pointer rounded-xl border  border-gray-200 bg-text px-5 py-2.5 text-sm font-medium text-white hover:bg-green focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 disabled:pointer-events-none disabled:bg-text-disabled disabled:text-gray-500"
+            className="my-2 me-2 w-4/12  cursor-pointer rounded-xl border  border-gray-200 bg-text px-5 py-2.5 text-sm font-medium text-white hover:bg-green focus:bg-green focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 disabled:pointer-events-none disabled:bg-text-disabled disabled:text-gray-500"
             disabled={isDisabled}
           >
             Save
