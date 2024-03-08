@@ -1,3 +1,4 @@
+import AddLinkButton from '@/components/AddLinkButton'
 import Logo from '@/components/Logo'
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
@@ -16,7 +17,9 @@ export default function App({ Component, pageProps }: AppProps): React.ReactElem
     <div className={robotoCondensed.className}>
       <nav className="flex flex-row items-center py-2 px-1 sm:px-4 lg:px-8">
         <Logo/>
-        <div className="ml-auto"></div>
+        <div className="ml-auto">
+          <AddLinkButton/>
+        </div>
       </nav>
       <main>
         <Component {...pageProps} />
