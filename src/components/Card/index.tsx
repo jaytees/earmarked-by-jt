@@ -1,34 +1,46 @@
-import { useEffect, useRef, useState } from "react"
+import { useState } from "react"
+import type { Dispatch, SetStateAction } from 'react'
 import { BookmarkType } from "@/types/bookmarks"
 import Card from "./Card"
+import { useToggle } from "@/hooks/useToggle"
+import bookmarkHelpers from "@/utils/bookmarkHelpers"
 
-const CardContainer: React.FC<{bookmark: BookmarkType, bookmarkIndex: number}> = ({bookmark, bookmarkIndex}): React.ReactElement => {
+export interface FormErrorsInt {
+  title: string
+  description: string
+}
+
+const CardContainer: React.FC<{bookmark: BookmarkType, bookmarkIndex: number, setBookmarks: Dispatch<SetStateAction<BookmarkType[]>>}> = ({bookmark, bookmarkIndex, setBookmarks}): React.ReactElement => {
   const [bookmarkData, setBookmarkData] = useState<BookmarkType>({...bookmark})
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
+  const [formErrors, setFormErrors] = useState<FormErrorsInt>({
+    title: '',
+    description: '',
+  })
+  const [hasValidationErrors, setHasValidationErrors] = useToggle(false)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value }: { name: string; value: string } = event.target
     setBookmarkData(prevState => ({ ...prevState, [name]: value }))
-    debounceSubmit()
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (event: React.ChangeEvent<HTMLInputElement>): void => {
     console.log('submitting')
-  }
-
-  const debounceSubmit = () => {
-    clearTimeout(timeoutRef.current)
-    timeoutRef.current = setTimeout(() => {
-      handleSubmit()
-    }, 3000)
-    console.log(timeoutRef.current)
-  }
-
-  useEffect(() => {
-    return () => {
-      clearTimeout(timeoutRef.current)
+    if (!bookmarkData.title) {
+      setFormErrors(prevState => ({ ...prevState, title: `Please enter a title` }))
+      setHasValidationErrors(true)
     }
-  }, [])
+    if (!bookmarkData.description) {
+      setFormErrors(prevState => ({ ...prevState, description: `Please enter a description` }))
+      setHasValidationErrors(true)
+    }
+
+    if (hasValidationErrors) {
+      return
+    }
+
+    const updatedBookmarksArray = bookmarkHelpers.editBookmark({bookmarkIndex, bookmarkData})
+    setBookmarks(updatedBookmarksArray)
+  }
 
 
   const handleDelete = () => {
@@ -36,7 +48,7 @@ const CardContainer: React.FC<{bookmark: BookmarkType, bookmarkIndex: number}> =
   }
 
   return (
-    <Card bookmark={bookmarkData} handleDelete={handleDelete} handleChange={handleChange}/>
+    <Card bookmark={bookmarkData} handleDelete={handleDelete} handleChange={handleChange} handleSubmit={handleSubmit}/>
   )
 }
 export default CardContainer

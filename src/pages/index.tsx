@@ -1,10 +1,11 @@
 import { NextPage } from 'next'
+import type { Dispatch, SetStateAction } from 'react'
 import { BookmarkType } from "@/types/bookmarks"
 import Head from 'next/head'
 import Card from '@/components/Card'
 
 
-const Home: NextPage<{ bookmarks: BookmarkType[]}> = ({bookmarks}): React.ReactElement => {
+const Home: NextPage<{ bookmarks: BookmarkType[], setBookmarks: Dispatch<SetStateAction<BookmarkType[]>>}> = ({bookmarks, setBookmarks}): React.ReactElement => {
   return (
     <>
       <Head>
@@ -15,7 +16,7 @@ const Home: NextPage<{ bookmarks: BookmarkType[]}> = ({bookmarks}): React.ReactE
             {
              bookmarks.map((bookmark, i) => {
                 return (
-                  <Card key={bookmark.id} bookmark={bookmark} bookmarkIndex={i} />
+                  <Card key={bookmark.id} bookmark={bookmark} setBookmarks={setBookmarks} bookmarkIndex={i} />
                 )
               })
             }

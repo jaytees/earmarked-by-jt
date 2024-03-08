@@ -3,7 +3,7 @@ import { BookmarkType } from "@/types/bookmarks"
 import styles from './Card.module.css'
 import DeleteIcon from "./DeleteIcon"
 
-const Card: React.FC<{bookmark: BookmarkType, handleDelete: () => void, handleChange: React.ChangeEventHandler}> = ({bookmark, handleDelete, handleChange}): React.ReactElement => {
+const Card: React.FC<{bookmark: BookmarkType, handleDelete: React.MouseEventHandler, handleChange: React.ChangeEventHandler, handleSubmit: React.FormEventHandler}> = ({bookmark, handleDelete, handleChange, handleSubmit}): React.ReactElement => {
   return (
     <article
       className={`${styles.card} relative flex flex-col p-5 w-full bg-stone-100 rounded-xl sm:py-6 sm:rounded-md`}
@@ -18,17 +18,16 @@ const Card: React.FC<{bookmark: BookmarkType, handleDelete: () => void, handleCh
               <span className="font-medium text-gray-600">{bookmark.title[0]}</span>
             </div>
           }
-          <form>
-            <input                           
-              type="text"
-              id="title"
-              name="title" 
-              required
-              value={bookmark.title} 
-              onChange={handleChange}
-              className="pl-2 flex-1 text-xl font-bold md:text-4xl truncate bg-stone-100 decoration-2 hover:underline hover:underline-offset-2 focus:underline"
-            />
-          </form>
+          <input                           
+            type="text"
+            id="title"
+            name="title" 
+            required
+            value={bookmark.title} 
+            onChange={handleChange}
+            onBlur={handleSubmit}
+            className="pl-2 flex-1 text-xl font-bold md:text-4xl truncate bg-stone-100 decoration-2 decoration-text-secondary hover:underline hover:underline-offset-2 focus:underline"
+          />
         </div>
         <p className="my-2 text-base font-medium text-text-secondary line-clamp-2">{bookmark.description}</p>
         <div className="absolute bottom-2 right-3">
