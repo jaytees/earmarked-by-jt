@@ -34,3 +34,9 @@ h6 {
     text-wrap: balance;
   }
 }
+
+@layer components {
+  .main-margin {
+    @apply mx-1 my-2 sm:mx-4 lg:mx-8
+  }
+}
