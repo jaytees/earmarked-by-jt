@@ -1,0 +1,18 @@
+.card__corner:before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  top: 0;
+  border-style: solid;
+  border-color: #fff #fff #a8a29e #a8a29e;
+  transition: 0.5s;
+  border-radius: 0 0 0 5px;
+  border-width: 15px;
+  box-shadow: -5px 5px 10px -6px #000;
+  transition: 0.3s all ease-out;
+}
+
+.card:hover .card__corner:before {
+  border-width: 0px;
+}

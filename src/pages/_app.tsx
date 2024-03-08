@@ -3,7 +3,7 @@ import Logo from '@/components/Logo'
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Roboto_Condensed } from 'next/font/google'
-import useLocalStorage from '@/hooks/useLocalStorage'
+import {useLocalStorage} from '@/hooks/useLocalStorage'
 
 const robotoCondensed = Roboto_Condensed({
   weight: 'variable',
