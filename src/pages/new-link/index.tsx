@@ -1,14 +1,21 @@
-import { BookmarkType } from '@/types/bookmarks'
 import { NextPage } from 'next'
-import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import Card from '@/components/Card'
+import { BookmarkType } from '@/types/bookmarks'
+import bookmarkHelpers from '@/utils/bookmarkHelpers'
+import { useToggle } from '@/hooks/useToggle'
 
-const NewLink: NextPage = () => {
+const NewLink: NextPage = ({id}: {id: string}) => {
+  const [isLoading, setIsLoading] = useToggle(true)
   const [bookmark, setBookmark] = useState<BookmarkType>()
-  const params = useParams<{ id: string }>()
 
   useEffect(() => {
-
+    setIsLoading(true)
+    const newBookmark = bookmarkHelpers.findBookmark(id)
+    if (newBookmark) {
+      setBookmark(newBookmark)
+    }
+    setIsLoading(false)
   })
 
   return (
@@ -20,7 +27,18 @@ const NewLink: NextPage = () => {
       </div>
       <h1 className="mt-4 text-xl font-bold">Congratulations!</h1>
       <h1 className="text-lg font-semibold">Your link has been earmarked.</h1>
+      <div className="mt-4 border-4 rounded-lg bg-stone-100">
+        {
+          !isLoading && <Card bookmark={bookmark}/>
+        }
+      </div>
     </section>
   )
 }
+
+NewLink.getInitialProps = async ({ query }) => {
+  const {id} = query
+  return {id}
+}
+
 export default NewLink

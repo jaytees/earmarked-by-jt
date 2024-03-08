@@ -24,13 +24,18 @@ class BookmarkHelpers {
       ...bookmarksArray.slice(0, bookmarkIndex),
       { ...bookmarkData },
       ...bookmarksArray.slice(bookmarkIndex + 1),
-    ];
-  };
+    ]
+  }
 
   deleteBookmark = (id: string): BookmarkType[] => {
     const bookmarksArray = this.loadBookmarks()
     return bookmarksArray.filter(bookmark => bookmark.id !== id)
-  };
+  }
+
+  findBookmark = (id: string): BookmarkType | undefined => {
+    const bookmarksArray = this.loadBookmarks()
+    return bookmarksArray.find(bookmark => bookmark.id === id)
+  }
 }
 
 const bookmarkHelpers = new BookmarkHelpers()

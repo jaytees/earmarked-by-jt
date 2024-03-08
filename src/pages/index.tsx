@@ -42,7 +42,7 @@ const Home: NextPage<{ bookmarks: BookmarkType[], setBookmarks: Dispatch<SetStat
       </Head>
       <section className='main-margin'>
         {
-          false ?
+          bookmarks ?
           <BookmarksGrid bookmarks={bookmarks} setBookmarks={setBookmarks}/>
           :
           <HomeEmptyState/>
