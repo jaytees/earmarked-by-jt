@@ -11,13 +11,11 @@
   },
   "extends": [
     "next",
-    "prettier",
     "plugin:@next/next/recommended",
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
-    "plugin:prettier/recommended",
     "plugin:tailwindcss/recommended"
   ],
   "parserOptions": {
@@ -30,7 +28,6 @@
   "plugins": [
     "react",
     "jsx-a11y",
-    "prettier",
     "tailwindcss"
   ],
   "rules": {
