@@ -1,33 +1,29 @@
-import { NextPage } from 'next'
-import Head from 'next/head'
-import { BookmarkFormDataInt, FormErrorsInt } from '.'
+import Head from "next/head"
+import { BookmarkFormDataInt, FormErrorsInt } from "."
 
-const labelErrorClasses = 'text-red-600 dark:text-red-500'
+const labelErrorClasses = 'text-red-600'
+const baseInputClasses = 'block w-full rounded-lg text-sm  p-2.5'
+const defaultInputClasses = 'border-gray-300 bg-white text-gray-900 focus:border-gray-600 focus:outline-2 focus:ring-2 focus:ring-gray-600 disabled:bg-gray-50'
 const inputErrorClasses =
-  'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5'
+  'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 rounded-lg focus:ring-red-500 focus:border-red-500'
 
-const AddLink: NextPage<{
-  handleSubmit: React.FormEventHandler
-  handleChange: React.ChangeEventHandler
+const AddLink: React.FC<{
   formData: BookmarkFormDataInt
   formErrors: FormErrorsInt
+  handleChange: React.ChangeEventHandler
+  handleSubmit: React.FormEventHandler
   hasValidationErrors: boolean
   submitting: boolean
-}> = ({
-  handleSubmit,
-  handleChange,
-  formData,
-  formErrors,
-  hasValidationErrors,
-  submitting,
-}): React.ReactElement => {
+}> = ({formData, formErrors, handleChange, handleSubmit, hasValidationErrors,
+  submitting,}): React.ReactElement => {
   const isDisabled = !formData.title || !formData.url || hasValidationErrors || submitting
+  
   return (
     <>
       <Head>
-        <title>Add link</title>
+        <title>Add link - EARMARKED By Jordan Trickett</title>
       </Head>
-      <section className="mx-1 my-2 flex flex-col items-center rounded-xl bg-stone-100 py-8 sm:mx-4 lg:mx-8">
+      <section className="flex flex-col items-center py-8 bg-stone-100 rounded-xl main-margin">
         <h1 className="mb-8 text-6xl font-black">ADD A LINK</h1>
         <form className="flex w-6/12 flex-col items-center" onSubmit={handleSubmit}>
           <div className="mb-6 grid w-full gap-6">
@@ -42,7 +38,7 @@ const AddLink: NextPage<{
                 type="text"
                 id="url"
                 name="url"
-                className={`block w-full rounded-lg border-gray-300 bg-white p-2.5 text-sm text-gray-900 focus:border-gray-600 focus:outline-2 focus:ring-2 focus:ring-gray-600 disabled:bg-gray-50 ${formErrors.url ? inputErrorClasses : ''}`}
+                className={`${baseInputClasses} ${formErrors.url ? inputErrorClasses : defaultInputClasses}`}
                 placeholder="Please enter the websites address"
                 value={formData.url}
                 onChange={handleChange}
@@ -62,7 +58,7 @@ const AddLink: NextPage<{
                 type="text"
                 id="title"
                 name="title"
-                className={`block w-full rounded-lg border-gray-300 bg-white p-2.5 text-sm text-gray-900 focus:border-gray-600 focus:outline-2 focus:ring-2 focus:ring-gray-600 disabled:bg-gray-50 ${formErrors.title ? inputErrorClasses : ''}`}
+                className={`${baseInputClasses} ${formErrors.title ? inputErrorClasses : defaultInputClasses}`}
                 placeholder="Please enter a title"
                 value={formData.title}
                 onChange={handleChange}
@@ -78,7 +74,7 @@ const AddLink: NextPage<{
               <textarea
                 id="description"
                 name="description"
-                className="block w-full rounded-lg border-gray-300 bg-white p-2.5 text-sm text-gray-900 focus:border-gray-600 focus:outline-2 focus:ring-2 focus:ring-gray-600 disabled:bg-gray-50"
+                className={`${baseInputClasses} ${defaultInputClasses}`}
                 placeholder="Please enter a description"
                 value={formData.description}
                 onChange={handleChange}

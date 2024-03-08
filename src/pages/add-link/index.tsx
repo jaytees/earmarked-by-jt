@@ -1,5 +1,5 @@
 import { NextPage } from "next"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useToggle } from "@/hooks/useToggle"
 import AddLink from "./AddLink"
 import validateForm from "@/utils/formValidators"
@@ -27,10 +27,20 @@ const AddLinkContainer: NextPage = (): React.ReactElement => {
   })
   const [hasValidationErrors, setHasValidationErrors] = useToggle(false)
   const [submitting, setSubmitting] = useToggle(false)
+
+  useEffect(() => {
+    if (!formErrors.title && !formErrors.url) {
+      setHasValidationErrors(false)
+    }
+  }, [formErrors])
   
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value }: { name: string; value: string } = event.target
+    const str = name as keyof FormErrorsInt
     setFormData(prevState => ({ ...prevState, [name]: value }))
+    if (formErrors[str]) {
+      setFormErrors(prevState => ({ ...prevState, [name]: '' }))
+    }
   }
 
   const validateRequired = async (): Promise<void> => {
