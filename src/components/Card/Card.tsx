@@ -36,7 +36,7 @@ const Card: React.FC<{bookmark: BookmarkType, handleDelete: React.MouseEventHand
         value={bookmark.description}
         onChange={handleChange}
         onBlur={handleSubmit}
-        className="my-3 text-xl font-medium text-text-secondary line-clamp-2 bg-stone-100 resize-none hover:bg-stone-50 hover:resize-y"
+        className="my-3 text-xl h-min font-medium text-text-secondary line-clamp-2 bg-stone-100 resize-none hover:bg-stone-50 hover:resize-y"
         />
         <div className="absolute bottom-2 right-3">
           <DeleteButton onClickHandler={handleDelete}/>

@@ -6,8 +6,12 @@ interface EditBookmarkParams {
 }
 
 class BookmarkHelpers {
+  loadBookmarks = (): BookmarkType[] => {
+    return JSON.parse(localStorage.getItem('bookmarks') || '[]')
+  }
+
   addBookmark = (bookmarkData: BookmarkType): BookmarkType[] => {
-    const currentBookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]')
+    const currentBookmarks = this.loadBookmarks()
     return [...currentBookmarks, bookmarkData]
   }
 
@@ -15,12 +19,17 @@ class BookmarkHelpers {
     bookmarkIndex,
     bookmarkData,
   }: EditBookmarkParams): BookmarkType[] => {
-    const bookmarksArray = JSON.parse(localStorage.getItem('bookmarks') || '[]')
+    const bookmarksArray = this.loadBookmarks()
     return [
       ...bookmarksArray.slice(0, bookmarkIndex),
       { ...bookmarkData },
       ...bookmarksArray.slice(bookmarkIndex + 1),
     ];
+  };
+
+  deleteBookmark = (id: string): BookmarkType[] => {
+    const bookmarksArray = this.loadBookmarks()
+    return bookmarksArray.filter(bookmark => bookmark.id !== id)
   };
 }
 

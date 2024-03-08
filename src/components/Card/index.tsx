@@ -44,7 +44,8 @@ const CardContainer: React.FC<{bookmark: BookmarkType, bookmarkIndex: number, se
 
 
   const handleDelete = () => {
-
+    const updatedBookmarksArray = bookmarkHelpers.deleteBookmark(bookmarkData.id)
+    setBookmarks(updatedBookmarksArray)
   }
 
   return (

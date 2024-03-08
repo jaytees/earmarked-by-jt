@@ -1,6 +1,20 @@
+import { useToggle } from "@/hooks/useToggle"
+
 const DeleteButton: React.FC<{onClickHandler:  React.MouseEventHandler}> = ({onClickHandler}): React.ReactElement => {
+  const [isActive, setIsActive] = useToggle(false)
+
+  if (isActive) {
+    return (
+      <div className="flex text-sm font-medium text-text-secondary">
+        <p className="pr-2">Are you sure?</p>
+        <button onClick={onClickHandler} className="pr-2 text-red-600 hover:text-red-400">yes</button>
+        <button onClick={() => setIsActive(false)} className="hover:text-text">no</button>
+      </div>
+    )
+  }
+
   return (
-    <button onClick={onClickHandler}>
+    <button onClick={() => setIsActive(true)}>
       <svg className="cursor-pointer w-5 h-5 text-text-secondary hover:text-text focus:text-text" fill="currentColor" version="1.1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" 
       >
         <g>
