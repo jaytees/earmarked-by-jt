@@ -4,7 +4,8 @@ import { BookmarkFormDataInt } from "."
 const AddLink: React.FC<{
   formData: BookmarkFormDataInt
   handleChange: React.ChangeEventHandler
-}> = ({formData, handleChange}): React.ReactElement => {
+  handleSubmit: React.FormEventHandler
+}> = ({formData, handleChange, handleSubmit}): React.ReactElement => {
   return (
     <>
       <Head>
@@ -12,7 +13,7 @@ const AddLink: React.FC<{
       </Head>
       <section className="flex flex-col items-center py-8 bg-stone-100 rounded-xl main-margin">
         <h1 className="mb-8 text-6xl font-black">ADD A LINK</h1>
-        <form className="flex flex-col items-center w-6/12">
+        <form className="flex flex-col items-center w-6/12" onSubmit={handleSubmit}>
           <div className="grid gap-6 mb-6 w-full">
             <div>
               <label
@@ -63,6 +64,12 @@ const AddLink: React.FC<{
                 />
               </div>
             </div>
+            <button
+              type="submit"
+              className="my-2 me-2 w-4/12  cursor-pointer rounded-xl border  border-gray-200 bg-text px-5 py-2.5 text-sm font-medium text-white hover:bg-green focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 disabled:pointer-events-none disabled:bg-text-disabled disabled:text-gray-500"
+            >
+              Save
+            </button>
           </div>
         </form>
       </section>
