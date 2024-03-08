@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 const variantButtonClasses = {
   primary: 'text-text hover:text-gray-600',
-  outline: 'text-text bg-white rounded-lg border-2 border-gray-200 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100'
+  outline: 'text-text bg-white rounded-lg border-2 border-gray-200 hover:bg-green focus:ring-4 focus:ring-gray-100'
 }
 
 interface ButtonPropsInt {
