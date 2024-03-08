@@ -1,24 +1,40 @@
-import Head from "next/head"
-import { BookmarkFormDataInt } from "."
+import { NextPage } from 'next'
+import Head from 'next/head'
+import { BookmarkFormDataInt, FormErrorsInt } from '.'
 
-const AddLink: React.FC<{
-  formData: BookmarkFormDataInt
-  handleChange: React.ChangeEventHandler
+const labelErrorClasses = 'text-red-600 dark:text-red-500'
+const inputErrorClasses =
+  'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5'
+
+const AddLink: NextPage<{
   handleSubmit: React.FormEventHandler
-}> = ({formData, handleChange, handleSubmit}): React.ReactElement => {
+  handleChange: React.ChangeEventHandler
+  formData: BookmarkFormDataInt
+  formErrors: FormErrorsInt
+  hasValidationErrors: boolean
+  submitting: boolean
+}> = ({
+  handleSubmit,
+  handleChange,
+  formData,
+  formErrors,
+  hasValidationErrors,
+  submitting,
+}): React.ReactElement => {
+  const isDisabled = !formData.title || !formData.url || hasValidationErrors || submitting
   return (
     <>
       <Head>
         <title>Add link</title>
       </Head>
-      <section className="flex flex-col items-center py-8 bg-stone-100 rounded-xl main-margin">
+      <section className="mx-1 my-2 flex flex-col items-center rounded-xl bg-stone-100 py-8 sm:mx-4 lg:mx-8">
         <h1 className="mb-8 text-6xl font-black">ADD A LINK</h1>
-        <form className="flex flex-col items-center w-6/12" onSubmit={handleSubmit}>
-          <div className="grid gap-6 mb-6 w-full">
+        <form className="flex w-6/12 flex-col items-center" onSubmit={handleSubmit}>
+          <div className="mb-6 grid w-full gap-6">
             <div>
               <label
                 htmlFor="url"
-                className="mb-2 block text-lg font-medium"
+                className={`mb-2 block text-lg font-medium ${formErrors.url ? labelErrorClasses : ''}`}
               >
                 Website address*
               </label>
@@ -26,17 +42,19 @@ const AddLink: React.FC<{
                 type="text"
                 id="url"
                 name="url"
-                className="block w-full rounded-lg border-gray-300 bg-white p-2.5 text-sm text-gray-900 focus:border-gray-600 focus:outline-2 focus:ring-2 focus:ring-gray-600 disabled:bg-gray-50"
+                className={`block w-full rounded-lg border-gray-300 bg-white p-2.5 text-sm text-gray-900 focus:border-gray-600 focus:outline-2 focus:ring-2 focus:ring-gray-600 disabled:bg-gray-50 ${formErrors.url ? inputErrorClasses : ''}`}
                 placeholder="Please enter the websites address"
                 value={formData.url}
                 onChange={handleChange}
                 required
+                disabled={submitting}
               />
+              <p className={`${labelErrorClasses} mt-1 h-1 text-sm`}>{formErrors.url}</p>
             </div>
             <div>
               <label
-                htmlFor="url"
-                className="mb-2 block text-lg font-medium"
+                htmlFor="title"
+                className={`mb-2 block text-lg font-medium ${formErrors.title ? labelErrorClasses : ''}`}
               >
                 Title*
               </label>
@@ -44,33 +62,37 @@ const AddLink: React.FC<{
                 type="text"
                 id="title"
                 name="title"
-                className="block w-full rounded-lg border-gray-300 bg-white p-2.5 text-sm text-gray-900 focus:border-gray-600 focus:outline-2 focus:ring-2 focus:ring-gray-600 disabled:bg-gray-50"
-                placeholder="Please enter the websites address"
+                className={`block w-full rounded-lg border-gray-300 bg-white p-2.5 text-sm text-gray-900 focus:border-gray-600 focus:outline-2 focus:ring-2 focus:ring-gray-600 disabled:bg-gray-50 ${formErrors.title ? inputErrorClasses : ''}`}
+                placeholder="Please enter a title"
                 value={formData.title}
                 onChange={handleChange}
                 required
+                disabled={submitting}
               />
-              <div>
-                <label htmlFor="description" className="mb-2 block text-lg font-medium">
-                  Description
-                </label>
-                <textarea
-                  id="description"
-                  name="description"
-                  className="block w-full rounded-lg border-gray-300 bg-white p-2.5 text-sm text-gray-900 focus:border-gray-600 focus:outline-2 focus:ring-2 focus:ring-gray-600 disabled:bg-gray-50"
-                  placeholder="Please enter a description"
-                  value={formData.description}
-                  onChange={handleChange}
-                />
-              </div>
+              <p className={`${labelErrorClasses} mt-1 h-1 text-sm`}>{formErrors.title}</p>
             </div>
-            <button
-              type="submit"
-              className="my-2 me-2 w-4/12  cursor-pointer rounded-xl border  border-gray-200 bg-text px-5 py-2.5 text-sm font-medium text-white hover:bg-green focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 disabled:pointer-events-none disabled:bg-text-disabled disabled:text-gray-500"
-            >
-              Save
-            </button>
+            <div>
+              <label htmlFor="description" className="mb-2 block text-lg font-medium">
+                Description
+              </label>
+              <textarea
+                id="description"
+                name="description"
+                className="block w-full rounded-lg border-gray-300 bg-white p-2.5 text-sm text-gray-900 focus:border-gray-600 focus:outline-2 focus:ring-2 focus:ring-gray-600 disabled:bg-gray-50"
+                placeholder="Please enter a description"
+                value={formData.description}
+                onChange={handleChange}
+                disabled={submitting}
+              />
+            </div>
           </div>
+          <button
+            type="submit"
+            className="my-2 me-2 w-4/12  cursor-pointer rounded-xl border  border-gray-200 bg-text px-5 py-2.5 text-sm font-medium text-white hover:bg-green focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 disabled:pointer-events-none disabled:bg-text-disabled disabled:text-gray-500"
+            disabled={isDisabled}
+          >
+            Save
+          </button>
         </form>
       </section>
     </>

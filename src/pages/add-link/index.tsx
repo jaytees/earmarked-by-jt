@@ -15,7 +15,6 @@ export interface FormErrorsInt {
   title: string
 }
 
-
 const AddLinkContainer: NextPage = (): React.ReactElement => {
   const [formData, setFormData] = useState<BookmarkFormDataInt>({
     url: '',
@@ -27,6 +26,7 @@ const AddLinkContainer: NextPage = (): React.ReactElement => {
     title: '',
   })
   const [hasValidationErrors, setHasValidationErrors] = useToggle(false)
+  const [submitting, setSubmitting] = useToggle(false)
   
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value }: { name: string; value: string } = event.target
@@ -44,8 +44,9 @@ const AddLinkContainer: NextPage = (): React.ReactElement => {
 
   const handleSubmit = async (event: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
     event.preventDefault()
+    setSubmitting(true)
     await validateRequired()
-    if (hasValidationErrors) return
+    if (hasValidationErrors) return setSubmitting(false)
     const res = await validateForm.validateLink(formData.url)
     if (res.error) {
       setFormErrors(prevState => ({
@@ -53,8 +54,11 @@ const AddLinkContainer: NextPage = (): React.ReactElement => {
         url: `${res.error}, please double check and re-enter`,
       }))
       setHasValidationErrors(true)
+      setSubmitting(false)
       return
     }
+    debugger
+    setSubmitting(false)
     // save to local storage
     // redirect
   }
@@ -62,8 +66,11 @@ const AddLinkContainer: NextPage = (): React.ReactElement => {
   return (
     <AddLink
       formData={formData}
+      formErrors={formErrors}
       handleChange={handleChange}
       handleSubmit={handleSubmit}
+      hasValidationErrors={hasValidationErrors}
+      submitting={submitting}
     />
   )
 }
