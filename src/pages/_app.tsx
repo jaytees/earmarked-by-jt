@@ -15,7 +15,7 @@ const robotoCondensed = Roboto_Condensed({
 })
 
 export default function App({ Component, pageProps }: AppProps): React.ReactElement {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const [bookmarks, setBookmarks] = useLocalStorage('bookmarks', [], setIsLoading)
   return (
     <div className={robotoCondensed.className}>

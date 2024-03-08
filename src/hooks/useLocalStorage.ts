@@ -3,7 +3,7 @@ import type { Dispatch, SetStateAction } from 'react'
 
 const IS_SERVER = typeof window === 'undefined'
 
-export function useLocalStorage<T>(key: string, defaultValue: T, setIsLoading): [T, Dispatch<SetStateAction<T>>] {
+export function useLocalStorage<T>(key: string, defaultValue: T, setIsLoading: Dispatch<SetStateAction<T>>): [T, Dispatch<SetStateAction<T>>] {
   const [storedValue, setStoredValue] = useState(defaultValue)
 
   const readValue = (): T => {

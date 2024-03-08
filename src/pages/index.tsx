@@ -6,6 +6,7 @@ import Head from 'next/head'
 import Card from '@/components/Card'
 import nothingToSeeHere from '../../public/nothing-to-see-here.gif'
 import AddLinkButton from '@/components/AddLinkButton'
+import Pagination from '@/components/Pagination'
 
 const BookmarksGrid: React.FC<{ bookmarks: BookmarkType[], setBookmarks: Dispatch<SetStateAction<BookmarkType[]>>}> = ({bookmarks, setBookmarks}): React.ReactElement => {
   return (
@@ -51,45 +52,6 @@ const getPageData = ({
   return bookmarksArray.slice(startIndex, endIndex);
 };
 
-const Pagination: React.FC = ({pageNumber, setPageNumber, numberOfPages}: {pageNumber: number, setPageNumber: React.SetStateAction, numberOfPages: number}): React.ReactElement => {
-  const navButtonOnClickHandler = (e) => {
-    debugger
-    if (e.target.ariaLabel === 'next' && pageNumber < numberOfPages) {
-      return setPageNumber(pageNumber + 1)
-    }
-    if (e.target.ariaLabel === 'previous' && pageNumber > 0) {
-      return setPageNumber(pageNumber - 1)
-    }
-  }
-
-  const numberClickHandler = (e) => {
-    setPageNumber(parseInt(e.target.innerHTML) - 1)
-  }
-
-  return (
-    <nav aria-label="page navigation" className='w-min'>
-      <ul className="inline-flex -space-x-px text-sm">
-        <li key="previous-button">
-          <button onClick={navButtonOnClickHandler} disabled={pageNumber === 0} aria-label='previous' className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">Previous</button>
-        </li>
-        {
-          Array.from({length: numberOfPages}).map((_, i) => {
-            return (
-              <li key={`number-${i}`}>
-                <button onClick={numberClickHandler} className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">{i + 1}</button>
-              </li>
-            )
-          })
-        }
-        <li key='next-button'>
-          <button onClick={navButtonOnClickHandler} disabled={pageNumber === numberOfPages} aria-label='next' className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 ">Next</button>
-        </li>
-      </ul>
-    </nav>
-  )
-}
-
-
 const Home: NextPage<{ bookmarks: BookmarkType[], setBookmarks: Dispatch<SetStateAction<BookmarkType[]>>, isLoadingBookmarks: boolean}> = ({bookmarks, setBookmarks, isLoadingBookmarks}): React.ReactElement => {
   const [pageNumber, setPageNumber] = useState<number>(0)
   const [pageData, setPageData] = useState<BookmarkType[]>([])
@@ -110,14 +72,14 @@ const Home: NextPage<{ bookmarks: BookmarkType[], setBookmarks: Dispatch<SetStat
       <Head>
         <title>EARMARKED By Jordan Tricket</title>
       </Head>
-      <section className='main-margin'>
+      <section className='main-margin pb-20'>
         {
           pageData ?
           <BookmarksGrid bookmarks={pageData} setBookmarks={setBookmarks}/>
           :
           <HomeEmptyState/>
         }
-        <div className="my-4">
+        <div className="my-4 fixed bottom-0 right-3">
           <Pagination pageNumber={pageNumber} setPageNumber={setPageNumber} numberOfPages={numberOfPages} />
         </div>
       </section>
