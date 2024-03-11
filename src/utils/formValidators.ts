@@ -9,6 +9,11 @@ export interface LinkValidationInt {
   error?: string
 }
 
+const getErrorMessage = (error: unknown) => {
+  if (error instanceof Error) return error.message
+  return String(error)
+}
+
 class ValidateForm {
   isProtocolPresent = (url: string): boolean =>
     url.indexOf('http://') !== -1 && url.indexOf('https://') !== -1
@@ -52,8 +57,8 @@ class ValidateForm {
       this.isValidUrl(checkedUrl)
       const res = await this.fetchLinkMeta(checkedUrl)
       return res
-    } catch (error: unknown) {
-      return { error: error.message, url: checkedUrl }
+    } catch (error) {
+      return { error: getErrorMessage(error), url: checkedUrl }
     }
   }
 }
