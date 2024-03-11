@@ -11,7 +11,7 @@ export interface FormErrorsInt {
   description: string
 }
 
-const CardContainer: React.FC<{bookmark: BookmarkType, bookmarkIndex: number | null, setBookmarks: Dispatch<SetStateAction<BookmarkType[]>>}> = ({bookmark, bookmarkIndex, setBookmarks}): React.ReactElement => {
+const CardContainer: React.FC<{bookmark: BookmarkType, setBookmarks: Dispatch<SetStateAction<BookmarkType[]>>}> = ({bookmark, setBookmarks}): React.ReactElement => {
   const [bookmarkData, setBookmarkData] = useState<BookmarkType>({...bookmark})
   const [formErrors, setFormErrors] = useState<FormErrorsInt>({
     title: '',
@@ -24,8 +24,7 @@ const CardContainer: React.FC<{bookmark: BookmarkType, bookmarkIndex: number | n
     setBookmarkData(prevState => ({ ...prevState, [name]: value }))
   }
 
-  const handleSubmit = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    console.log('submitting')
+  const handleSubmit = (): void => {
     if (!bookmarkData.title) {
       setFormErrors(prevState => ({ ...prevState, title: `Please enter a title` }))
       setHasValidationErrors(true)
@@ -39,10 +38,8 @@ const CardContainer: React.FC<{bookmark: BookmarkType, bookmarkIndex: number | n
       return
     }
 
-    if (bookmarkIndex) {
-      const updatedBookmarksArray = bookmarkHelpers.editBookmark({bookmarkIndex, bookmarkData})
-      setBookmarks(updatedBookmarksArray)
-    }
+    const updatedBookmarksArray = bookmarkHelpers.editBookmark({bookmarkId: bookmark.id, bookmarkData})
+    setBookmarks(updatedBookmarksArray)
   }
 
 
@@ -52,7 +49,7 @@ const CardContainer: React.FC<{bookmark: BookmarkType, bookmarkIndex: number | n
   }
 
   return (
-    <Card bookmark={bookmarkData} handleDelete={handleDelete} handleChange={handleChange} handleSubmit={handleSubmit}/>
+    <Card bookmark={bookmarkData} handleDelete={handleDelete} handleChange={handleChange} handleSubmit={handleSubmit} formErrors={formErrors}/>
   )
 }
 export default React.memo(CardContainer)

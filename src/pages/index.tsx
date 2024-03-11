@@ -14,7 +14,7 @@ const BookmarksGrid: React.FC<{ bookmarks: BookmarkType[], setBookmarks: Dispatc
       {
         bookmarks.map((bookmark, i) => {
           return (
-            <Card key={`${bookmark.id}-${i}`} bookmark={bookmark} setBookmarks={setBookmarks} bookmarkIndex={i} />
+            <Card key={bookmark.id} bookmark={bookmark} setBookmarks={setBookmarks} />
             )
           })
       }

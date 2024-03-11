@@ -1,7 +1,7 @@
 import { BookmarkType } from '@/types/bookmarks'
 
 interface EditBookmarkParams {
-  bookmarkIndex: number
+  bookmarkId: string
   bookmarkData: BookmarkType
 }
 
@@ -21,15 +21,19 @@ class BookmarkHelpers {
   }
 
   editBookmark = ({
-    bookmarkIndex,
+    bookmarkId,
     bookmarkData,
   }: EditBookmarkParams): BookmarkType[] => {
+    debugger
     const bookmarksArray = this.loadBookmarks()
-    return [
-      ...bookmarksArray.slice(0, bookmarkIndex),
-      { ...bookmarkData },
-      ...bookmarksArray.slice(bookmarkIndex + 1),
-    ]
+    return bookmarksArray.map((bookmark) => {
+      if (bookmark.id === bookmarkId) {
+        return {
+          ...bookmarkData,
+        };
+      }
+      return bookmark;
+    });
   }
 
   deleteBookmark = (id: string): BookmarkType[] => {

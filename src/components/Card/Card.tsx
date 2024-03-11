@@ -2,8 +2,9 @@ import Link from "next/link"
 import { BookmarkType } from "@/types/bookmarks"
 import styles from './Card.module.css'
 import DeleteButton from "./DeleteButton"
+import { FormErrorsInt } from "."
 
-const Card: React.FC<{bookmark: BookmarkType, handleDelete: React.MouseEventHandler, handleChange: React.ChangeEventHandler, handleSubmit: React.FormEventHandler}> = ({bookmark, handleDelete, handleChange, handleSubmit}): React.ReactElement => {
+const Card: React.FC<{bookmark: BookmarkType, formErrors: FormErrorsInt, handleDelete: React.MouseEventHandler, handleChange: React.ChangeEventHandler, handleSubmit: React.FormEventHandler}> = ({bookmark, formErrors, handleDelete, handleChange, handleSubmit}): React.ReactElement => {
 
   return (
     <article
@@ -29,6 +30,7 @@ const Card: React.FC<{bookmark: BookmarkType, handleDelete: React.MouseEventHand
             onBlur={handleSubmit}
             className="pl-2 flex-1 text-xl font-bold md:text-4xl truncate bg-stone-100 decoration-2 decoration-text-secondary hover:underline hover:underline-offset-2 focus:underline"
           />
+          <p className={`text-red-600 mt-1 h-1 text-sm`}>{formErrors?.title}</p>
         </div>
         <textarea
         id="description"
@@ -38,6 +40,7 @@ const Card: React.FC<{bookmark: BookmarkType, handleDelete: React.MouseEventHand
         onBlur={handleSubmit}
         className="my-3 text-xl h-min font-medium text-text-secondary line-clamp-2 bg-stone-100 resize-none hover:bg-stone-50 hover:resize-y"
         />
+        <p className={`text-red-600 mt-1 h-1 text-sm`}>{formErrors?.description}</p>
         <div className="absolute bottom-2 right-3">
           <DeleteButton onClickHandler={handleDelete}/>
         </div>

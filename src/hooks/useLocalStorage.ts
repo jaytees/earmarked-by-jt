@@ -26,7 +26,6 @@ export function useLocalStorage<T>(key: string, defaultValue: T, setIsLoading: D
     }
     try {
       setIsLoading(true)
-      debugger
       localStorage.setItem(key, JSON.stringify(value))
       setStoredValue(value)
     } catch (error) {
