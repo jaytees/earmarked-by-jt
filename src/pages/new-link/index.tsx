@@ -51,7 +51,7 @@ const NewLink: NextPage<{setBookmarks: Dispatch<SetStateAction<BookmarkType[]>>}
       <div className="mt-4 border-4 rounded-lg bg-stone-100">
         {
           !isLoading && bookmark ?
-          <Card bookmark={bookmark} bookmarkIndex={bookmarkIndex} setBookmarks={setBookmarks}/>
+          <Card bookmark={bookmark} setBookmarks={setBookmarks}/>
           :
           <p className='text-red-900 text-sm'>Error loading bookmark. Please refresh</p>
         }
