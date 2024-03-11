@@ -46,7 +46,6 @@ const getPageData = ({
   pageNumber,
   numberOfResults = 20,
 }:ChangePageParams): BookmarkType[] => {
-  debugger
   const startIndex = pageNumber * numberOfResults;
   const endIndex = (pageNumber + 1) * numberOfResults;
   return bookmarksArray.slice(startIndex, endIndex);
@@ -74,10 +73,10 @@ const Home: NextPage<{ bookmarks: BookmarkType[], setBookmarks: Dispatch<SetStat
       </Head>
       <section className='main-margin pb-20'>
         {
-          pageData ?
-          <BookmarksGrid bookmarks={pageData} setBookmarks={setBookmarks}/>
-          :
+          !isLoadingBookmarks && !pageData.length ?
           <HomeEmptyState/>
+          :
+          <BookmarksGrid bookmarks={pageData} setBookmarks={setBookmarks}/>
         }
         <div className="my-4 fixed bottom-0 right-3">
           <PaginationControls pageNumber={pageNumber} setPageNumber={setPageNumber} numberOfPages={numberOfPages} />
