@@ -1,4 +1,4 @@
-import type { Dispatch, MouseEventHandler, SetStateAction } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
 
 const PaginationControls: React.FC<{pageNumber: number, setPageNumber: Dispatch<SetStateAction<number>>, numberOfPages: number}> = ({pageNumber, setPageNumber, numberOfPages}): React.ReactElement => {
 

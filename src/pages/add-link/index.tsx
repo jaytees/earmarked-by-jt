@@ -1,107 +1,22 @@
+import Head from "next/head"
 import { NextPage } from "next"
-import { useState, useEffect } from "react"
 import type { Dispatch, SetStateAction } from 'react'
-import { useRouter } from 'next/router'
-import { v4 as uuidv4 } from 'uuid'
-import { useToggle } from "@/hooks/useToggle"
-import AddLink from "./AddLink"
-import validateForm from "@/utils/formValidators"
 import { BookmarkType } from "@/types/bookmarks"
-import bookmarkHelpers from "@/utils/bookmarkHelpers"
+import AddLinkForm from "@/components/AddLinkForm"
 
-export interface BookmarkFormDataInt {
-  url: string
-  title: string
-  description: string
-}
-
-export interface FormErrorsInt {
-  url: string
-  title: string
-}
-
-const AddLinkContainer: NextPage<{ setBookmarks: Dispatch<SetStateAction<BookmarkType[]>> }> = ({
+const AddLink: NextPage<{setBookmarks: Dispatch<SetStateAction<BookmarkType[]>> }> = ({
   setBookmarks,
 }): React.ReactElement => {
-  const router = useRouter()
-  const [formData, setFormData] = useState<BookmarkFormDataInt>({
-    url: '',
-    title: '',
-    description: '',
-  })
-  const [formErrors, setFormErrors] = useState<FormErrorsInt>({
-    url: '',
-    title: '',
-  })
-  const [hasValidationErrors, setHasValidationErrors] = useToggle(false)
-  const [submitting, setSubmitting] = useToggle(false)
-
-  useEffect(() => {
-    if (!formErrors.title && !formErrors.url) {
-      setHasValidationErrors(false)
-    }
-  }, [formErrors])
-  
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const { name, value }: { name: string; value: string } = event.target
-    const str = name as keyof FormErrorsInt
-    setFormData(prevState => ({ ...prevState, [name]: value }))
-    if (formErrors[str]) {
-      setFormErrors(prevState => ({ ...prevState, [name]: '' }))
-    }
-  }
-
-  const validateRequired = async (): Promise<void> => {
-    return Object.keys(formData).forEach((key, i): void => {
-      if (!key[i]) {
-        setFormErrors(prevState => ({ ...prevState, [key[i]]: `Please enter a ${key}` }))
-        setHasValidationErrors(true)
-      }
-    })
-  }
-
-  const handleSubmit = async (event: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
-    event.preventDefault()
-    setSubmitting(true)
-    await validateRequired()
-    if (hasValidationErrors) return setSubmitting(false)
-    const res = await validateForm.validateLink(formData.url)
-    if (res.error) {
-      setFormErrors(prevState => ({
-        ...prevState,
-        url: `${res.error}, please double check and re-enter`,
-      }))
-      setHasValidationErrors(true)
-      setSubmitting(false)
-      return
-    }
-    setSubmitting(false)
-    const finalBookmarkdata = {
-      ...formData,
-      id: uuidv4(),
-      url: res.url,
-      icon: res.icon,
-    }
-    const updatedBookmarksArray = bookmarkHelpers.addBookmark(finalBookmarkdata)
-    setBookmarks(updatedBookmarksArray)
-    setSubmitting(false)
-    router.push({
-      pathname: '/new-link',
-      query: {
-        id: finalBookmarkdata.id,
-      },
-    })
-  }
-  
   return (
-    <AddLink
-      formData={formData}
-      formErrors={formErrors}
-      handleChange={handleChange}
-      handleSubmit={handleSubmit}
-      hasValidationErrors={hasValidationErrors}
-      submitting={submitting}
-    />
+    <>
+      <Head>
+        <title>Add link - EARMARKED By Jordan Trickett</title>
+      </Head>
+      <section className="flex flex-col items-center py-8 bg-stone-100 rounded-xl main-margin">
+        <h1 className="mb-8 text-6xl font-black">ADD A LINK</h1>
+        <AddLinkForm setBookmarks={setBookmarks} renderedLocation='default'/>
+      </section>
+    </>
   )
 }
-export default AddLinkContainer
+export default AddLink

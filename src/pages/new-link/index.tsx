@@ -7,6 +7,7 @@ import { BookmarkType } from '@/types/bookmarks'
 import bookmarkHelpers from '@/utils/bookmarkHelpers'
 import { useToggle } from '@/hooks/useToggle'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 const NewLink: NextPage<{setBookmarks: Dispatch<SetStateAction<BookmarkType[]>>}> = ({setBookmarks}) => {
   const router = useRouter()
@@ -47,7 +48,7 @@ const NewLink: NextPage<{setBookmarks: Dispatch<SetStateAction<BookmarkType[]>>}
         </svg>
       </div>
       <h1 className="mt-4 text-xl font-bold">Congratulations!</h1>
-      <h1 className="text-lg font-semibold">Your link has been earmarked.</h1>
+      <h2 className="text-lg font-semibold">Your link has been earmarked.</h2>
       <div className="mt-4 border-4 rounded-lg bg-stone-100">
         {
           !isLoading && bookmark ?
@@ -55,8 +56,8 @@ const NewLink: NextPage<{setBookmarks: Dispatch<SetStateAction<BookmarkType[]>>}
           :
           <p className='text-red-900 text-sm'>Error loading bookmark. Please refresh</p>
         }
-
       </div>
+      <Link href='/' className="mt-4 text-base font-semibold text-text-secondary hover:text-text">Back to home</Link>
     </section>
   )
 }
