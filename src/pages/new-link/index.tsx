@@ -1,22 +1,43 @@
+"use client"
 import { NextPage } from 'next'
 import { useEffect, useState } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
 import Card from '@/components/Card'
 import { BookmarkType } from '@/types/bookmarks'
 import bookmarkHelpers from '@/utils/bookmarkHelpers'
 import { useToggle } from '@/hooks/useToggle'
+import { useRouter } from 'next/router'
 
-const NewLink: NextPage = ({id}: {id: string}) => {
+const NewLink: NextPage<{setBookmarks: Dispatch<SetStateAction<BookmarkType[]>>}> = ({setBookmarks}) => {
+  const router = useRouter()
   const [isLoading, setIsLoading] = useToggle(true)
-  const [bookmark, setBookmark] = useState<BookmarkType>()
+  const [bookmarkIndex, setBookmarkIndex] = useState<number | null>(null)
+  const [bookmark, setBookmark] = useState<BookmarkType>({
+    id: '',
+    url: '',
+    title: '',
+    description: '',
+    icon: ''
+  })
 
   useEffect(() => {
-    setIsLoading(true)
-    const newBookmark = bookmarkHelpers.findBookmark(id)
-    if (newBookmark) {
-      setBookmark(newBookmark)
+    const fetchBookmark = async () => {
+      setIsLoading(true)
+      let newBookmark
+      const id = router.query.id as string
+      if (id) {
+        newBookmark = bookmarkHelpers.fetchBookmark(id)
+      }
+      if (newBookmark) {
+        setBookmark(newBookmark.bookmark)
+        setBookmarkIndex(newBookmark.bookmarkIndex)
+      }
+      setIsLoading(false)
     }
-    setIsLoading(false)
-  })
+    if (router.isReady) {
+      fetchBookmark()
+    }
+  }, [router.isReady])
 
   return (
     <section className="flex flex-col items-center py-8 bg-stone-100 rounded-xl main-margin">
@@ -29,16 +50,15 @@ const NewLink: NextPage = ({id}: {id: string}) => {
       <h1 className="text-lg font-semibold">Your link has been earmarked.</h1>
       <div className="mt-4 border-4 rounded-lg bg-stone-100">
         {
-          !isLoading && <Card bookmark={bookmark}/>
+          !isLoading && bookmark ?
+          <Card bookmark={bookmark} bookmarkIndex={bookmarkIndex} setBookmarks={setBookmarks}/>
+          :
+          <p className='text-red-900 text-sm'>Error loading bookmark. Please refresh</p>
         }
+
       </div>
     </section>
   )
-}
-
-NewLink.getInitialProps = async ({ query }) => {
-  const {id} = query
-  return {id}
 }
 
 export default NewLink

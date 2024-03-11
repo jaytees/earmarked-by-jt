@@ -1,8 +1,13 @@
 import { BookmarkType } from '@/types/bookmarks'
 
 interface EditBookmarkParams {
-  bookmarkIndex: number;
+  bookmarkIndex: number
   bookmarkData: BookmarkType
+}
+
+interface FetchBookmarkInt {
+  bookmark: BookmarkType
+  bookmarkIndex: number
 }
 
 class BookmarkHelpers {
@@ -32,9 +37,11 @@ class BookmarkHelpers {
     return bookmarksArray.filter(bookmark => bookmark.id !== id)
   }
 
-  findBookmark = (id: string): BookmarkType | undefined => {
+  fetchBookmark = (id: string): FetchBookmarkInt | undefined => {
     const bookmarksArray = this.loadBookmarks()
-    return bookmarksArray.find(bookmark => bookmark.id === id)
+    const index = bookmarksArray.findIndex((bookmark) => bookmark.id === id)
+    return { bookmark: bookmarksArray[index], bookmarkIndex: index }
+
   }
 }
 

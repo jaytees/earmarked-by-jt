@@ -1,3 +1,4 @@
+import React from "react"
 import { useState } from "react"
 import type { Dispatch, SetStateAction } from 'react'
 import { BookmarkType } from "@/types/bookmarks"
@@ -10,7 +11,7 @@ export interface FormErrorsInt {
   description: string
 }
 
-const CardContainer: React.FC<{bookmark: BookmarkType, bookmarkIndex: number, setBookmarks: Dispatch<SetStateAction<BookmarkType[]>>}> = ({bookmark, bookmarkIndex, setBookmarks}): React.ReactElement => {
+const CardContainer: React.FC<{bookmark: BookmarkType, bookmarkIndex: number | null, setBookmarks: Dispatch<SetStateAction<BookmarkType[]>>}> = ({bookmark, bookmarkIndex, setBookmarks}): React.ReactElement => {
   const [bookmarkData, setBookmarkData] = useState<BookmarkType>({...bookmark})
   const [formErrors, setFormErrors] = useState<FormErrorsInt>({
     title: '',
@@ -38,8 +39,10 @@ const CardContainer: React.FC<{bookmark: BookmarkType, bookmarkIndex: number, se
       return
     }
 
-    const updatedBookmarksArray = bookmarkHelpers.editBookmark({bookmarkIndex, bookmarkData})
-    setBookmarks(updatedBookmarksArray)
+    if (bookmarkIndex) {
+      const updatedBookmarksArray = bookmarkHelpers.editBookmark({bookmarkIndex, bookmarkData})
+      setBookmarks(updatedBookmarksArray)
+    }
   }
 
 
@@ -52,4 +55,4 @@ const CardContainer: React.FC<{bookmark: BookmarkType, bookmarkIndex: number, se
     <Card bookmark={bookmarkData} handleDelete={handleDelete} handleChange={handleChange} handleSubmit={handleSubmit}/>
   )
 }
-export default CardContainer
+export default React.memo(CardContainer)

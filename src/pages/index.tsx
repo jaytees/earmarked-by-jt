@@ -6,7 +6,7 @@ import Head from 'next/head'
 import Card from '@/components/Card'
 import nothingToSeeHere from '../../public/nothing-to-see-here.gif'
 import AddLinkButton from '@/components/AddLinkButton'
-import Pagination from '@/components/Pagination'
+import PaginationControls from '@/components/PaginationControls'
 
 const BookmarksGrid: React.FC<{ bookmarks: BookmarkType[], setBookmarks: Dispatch<SetStateAction<BookmarkType[]>>}> = ({bookmarks, setBookmarks}): React.ReactElement => {
   return (
@@ -80,7 +80,7 @@ const Home: NextPage<{ bookmarks: BookmarkType[], setBookmarks: Dispatch<SetStat
           <HomeEmptyState/>
         }
         <div className="my-4 fixed bottom-0 right-3">
-          <Pagination pageNumber={pageNumber} setPageNumber={setPageNumber} numberOfPages={numberOfPages} />
+          <PaginationControls pageNumber={pageNumber} setPageNumber={setPageNumber} numberOfPages={numberOfPages} />
         </div>
       </section>
     </>
