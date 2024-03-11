@@ -16,7 +16,7 @@ const AddLink: React.FC<{
   submitting: boolean
 }> = ({formData, formErrors, handleChange, handleSubmit, hasValidationErrors,
   submitting,}): React.ReactElement => {
-  const isDisabled = !formData.title || !formData.url || hasValidationErrors || submitting
+  const isDisabled = !formData?.title || !formData?.url || hasValidationErrors || submitting
 
   return (
     <>
@@ -30,7 +30,7 @@ const AddLink: React.FC<{
             <div>
               <label
                 htmlFor="url"
-                className={`mb-2 block text-lg font-medium ${formErrors.url ? labelErrorClasses : ''}`}
+                className={`mb-2 block text-lg font-medium ${formErrors?.url ? labelErrorClasses : ''}`}
               >
                 Website address*
               </label>
@@ -38,19 +38,19 @@ const AddLink: React.FC<{
                 type="text"
                 id="url"
                 name="url"
-                className={`${baseInputClasses} ${formErrors.url ? inputErrorClasses : defaultInputClasses}`}
+                className={`${baseInputClasses} ${formErrors?.url ? inputErrorClasses : defaultInputClasses}`}
                 placeholder="Please enter the websites address"
-                value={formData.url}
+                value={formData?.url}
                 onChange={handleChange}
                 required
                 disabled={submitting}
               />
-              <p className={`${labelErrorClasses} mt-1 h-1 text-sm`}>{formErrors.url}</p>
+              <p className={`${labelErrorClasses} mt-1 h-1 text-sm`}>{formErrors?.url}</p>
             </div>
             <div>
               <label
                 htmlFor="title"
-                className={`mb-2 block text-lg font-medium ${formErrors.title ? labelErrorClasses : ''}`}
+                className={`mb-2 block text-lg font-medium ${formErrors?.title ? labelErrorClasses : ''}`}
               >
                 Title*
               </label>
@@ -58,14 +58,14 @@ const AddLink: React.FC<{
                 type="text"
                 id="title"
                 name="title"
-                className={`${baseInputClasses} ${formErrors.title ? inputErrorClasses : defaultInputClasses}`}
+                className={`${baseInputClasses} ${formErrors?.title ? inputErrorClasses : defaultInputClasses}`}
                 placeholder="Please enter a title"
-                value={formData.title}
+                value={formData?.title}
                 onChange={handleChange}
                 required
                 disabled={submitting}
               />
-              <p className={`${labelErrorClasses} mt-1 h-1 text-sm`}>{formErrors.title}</p>
+              <p className={`${labelErrorClasses} mt-1 h-1 text-sm`}>{formErrors?.title}</p>
             </div>
             <div>
               <label htmlFor="description" className="mb-2 block text-lg font-medium">
@@ -76,7 +76,7 @@ const AddLink: React.FC<{
                 name="description"
                 className={`${baseInputClasses} ${defaultInputClasses}`}
                 placeholder="Please enter a description"
-                value={formData.description}
+                value={formData?.description}
                 onChange={handleChange}
                 disabled={submitting}
               />
