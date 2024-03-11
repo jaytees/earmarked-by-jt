@@ -25,11 +25,14 @@ export function useLocalStorage<T>(key: string, defaultValue: T, setIsLoading: D
       )
     }
     try {
+      setIsLoading(true)
+      debugger
       localStorage.setItem(key, JSON.stringify(value))
       setStoredValue(value)
     } catch (error) {
       console.warn(`Error setting localStorage key “${key}”:`, error)
     }
+    setIsLoading(false)
   }
 
   useEffect(() => {

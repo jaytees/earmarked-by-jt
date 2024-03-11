@@ -28,6 +28,7 @@ const HomeEmptyState = () => {
       <Image
         src={nothingToSeeHere}
         alt='empty state'
+        priority
       />
       <h1 className="mt-8 mb-4 text-xl font-semibold">Get started by adding some links</h1>
       <AddLinkButton variant='outline'/>
@@ -36,8 +37,8 @@ const HomeEmptyState = () => {
 }
 
 interface ChangePageParams {
-  bookmarksArray: BookmarkType[];
-  pageNumber: number;
+  bookmarksArray: BookmarkType[]
+  pageNumber: number
   numberOfResults?: number
 }
 
@@ -46,10 +47,10 @@ const getPageData = ({
   pageNumber,
   numberOfResults = 20,
 }:ChangePageParams): BookmarkType[] => {
-  const startIndex = pageNumber * numberOfResults;
-  const endIndex = (pageNumber + 1) * numberOfResults;
-  return bookmarksArray.slice(startIndex, endIndex);
-};
+  const startIndex = pageNumber * numberOfResults
+  const endIndex = (pageNumber + 1) * numberOfResults
+  return bookmarksArray.slice(startIndex, endIndex)
+}
 
 const Home: NextPage<{ bookmarks: BookmarkType[], setBookmarks: Dispatch<SetStateAction<BookmarkType[]>>, isLoadingBookmarks: boolean}> = ({bookmarks, setBookmarks, isLoadingBookmarks}): React.ReactElement => {
   const [pageNumber, setPageNumber] = useState<number>(0)
@@ -60,7 +61,7 @@ const Home: NextPage<{ bookmarks: BookmarkType[], setBookmarks: Dispatch<SetStat
   useEffect(() => {
     const nextPageData = getPageData({bookmarksArray: bookmarks, pageNumber})
     setPageData(nextPageData)
-  }, [pageNumber, isLoadingBookmarks])
+  }, [pageNumber, isLoadingBookmarks, bookmarks])
 
   useEffect(() => {
     setNumberOfPages(Math.ceil(bookmarks.length / resultsPerPage))
